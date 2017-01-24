@@ -1,25 +1,15 @@
+# GADGET 
 
+## What is this?
 
+Gadget is an XML inspector.
 
-                                    G A D G E T 
+Gadget was written by Stefano Mazzocchi for the MIT SIMILE project. I took a copy from the [Google Code SVN Archive](https://code.google.com/archive/p/simile-gadget/) and converted it to Git, retaining some of the history that was still available in SVN. 
 
+## What can I do with this? 
 
-
-
-  What is this?
-  -------------
-
-  Gadget is an XML inspector.
-
-     [sound of inspector gadget theme playing in the back]
-
-
-
-  What can I do with this? 
-  ------------------------
-
-  When you want to have a condensed representation of (normally, a lot!) of 
-  well-formed XML data. This is normally useful in situations like:
+When you want to have a condensed representation of (normally, a lot!) of 
+well-formed XML data. This is normally useful in situations like:
 
     - data understanding and exploration
     - data migration/transformation
@@ -28,37 +18,26 @@
     - schema adherence understanding
     - schema emergence
 
+## Requirements
 
+Gadget is a command line application and requires:
 
-  Requirements
-  ------------
+* A Java 1.4 or later compatible virtual machine for your operating system.
+* Maven 2.0 or later must be installed and the "mvn" command found in your shell path (get it from http://maven.apache.org if you don't have it already).
 
-  Gadget is a command line application and requires:
+## Running Gadget is 4 steps
 
-   o  A Java 1.4 or later compatible virtual machine for your operating system.
+from your favorite unix shell or from the windows DOS prompt and 
+being connected to the internet type:
 
-   o  Maven 2.0 or later must be installed and the "mvn" command found
-      in your shell path.
-      (get it from http://maven.apache.org if you don't have it already).
+1. `mvn package`
+2. `./gadget index -o data/blah -r /path/to/your/pile/of/xml/`
+3. `./gadget chart data/blah`
+4. `mvn jetty:run`
 
+Point your browser to `http://127.0.0.1:8080/` to browse gadget.
 
-
-
-
-  Running Gadget is 4 steps
-  ------------------------
-
-  from your favorite unix shell or from the windows DOS prompt and 
-  being connected to the internet type:
-
-   1> mvn package
-   2> ./gadget index -o data/blah -r /path/to/your/pile/of/xml/
-   3> ./gadget chart data/blah
-   4> mvn jetty:run
-
-  Point your browser to http://127.0.0.1:8080/ to browse gadget.
-
-  NOTE: on windows, use "gadget" instead of "./gadget".
+NOTE: on windows, use `gadget` instead of `./gadget`.
 
 
 
