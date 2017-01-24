@@ -23,7 +23,7 @@ Gadget is a command line application and requires:
 * A Java 1.4 or later compatible virtual machine for your operating system.
 * Maven 2.0 or later must be installed and the "mvn" command found in your shell path (get it from http://maven.apache.org if you don't have it already).
 
-## Running Gadget is 4 steps
+## Running Gadget is 5 steps
 
 from your favorite unix shell or from the windows DOS prompt and 
 being connected to the internet type:
@@ -31,7 +31,8 @@ being connected to the internet type:
 1. `mvn package`
 2. `./gadget index -o data/blah -r /path/to/your/pile/of/xml/`
 3. `./gadget chart data/blah`
-4. `mvn jetty:run`
+4. Make a copy of `dataset.properties` in your `data/blah` folder, and edit it to describe the dataset.
+5. `mvn jetty:run`
 
 Point your browser to `http://127.0.0.1:8080/` to browse gadget.
 
@@ -42,7 +43,8 @@ NOTE: on Windows, use `gadget` instead of `./gadget`.
 1. builds gadget and fetches the required libraries from the web
 2. generates the gadget indices used by the web application by processing your XML data. Since the -r option is turned on,  it will recursively scan the given directory for all the `*.xml` files, process them and save the indices in `data/blah`
 3. generates the distribution charts and the sparklines. This stage is optional, meaning that the web application will perform the same operation at runtime if not performed before, but if your dataset is large it's better to pre-compute them to increase the gadget's startup performance when browsing.
-4. runs the gadget web application and provides you a user interface way to access the generated indices via your web browser.
+4. adds metadata describing the dataset
+5. runs the gadget web application and provides you a user interface way to access the generated indices via your web browser.
 
 ## Are there any more in-depth docs?
 
