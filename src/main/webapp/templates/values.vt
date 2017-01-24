@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+ <title>Gadget | $dataset | $xpath</title>
+ <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+ <link rel="stylesheet" type="text/css" href="../styles/main.css" media="print"/>
+ <link rel="stylesheet" type="text/css" href="../styles/print.css" media="print"/>
+ <link rel="stylesheet" type="text/css" href="../styles/base/content.css" media="all"/>
+ <link rel="stylesheet" type="text/css" href="../styles/cavendish/content.css" title="Cavendish" media="all"/>
+ <link rel="stylesheet" type="text/css" href="../styles/base/template.css" media="screen"/>
+ <link rel="stylesheet" type="text/css" href="../styles/cavendish/template.css" title="Cavendish" media="screen"/>
+ <script src="data?xpath=$xpath&sort=$sort&query=$query&size=$size&order=$order" type="text/javascript">//</script>
+ <script>
+   function init() {
+
+ #if ($sort == "clusters")
+	var hook = document.getElementById('datahook');
+	var parent = hook.parentNode;
+	parent.removeChild(hook);
+    var a = parent.innerHTML;
+	var counter = 0;
+	var end = "";
+    for (var d in data) {
+    		counter += 1;
+		data[d].sort(comparator);
+		a += "<tbody class='cluster'>";
+        	for (var r in data[d]) {
+			a += "<tr class='" + ((counter % 2 == 0) ? "even" : "odd") + "'>";
+			end = d;
+        		a +=  "<td>" + data[d][r][0] + "</td>";
+        		a +=  "<td class='number'>" + data[d][r][1] + "</td>";
+        		a +=  "<td class='number'>" + data[d][r][0].length + "</td>";
+            	a += "</tr>";
+        	}
+		a += "</tbody>";
+    }
+
+	if (counter == 0) {
+        	var message = document.getElementById('message');
+		message.style.display = "block";
+	} else {
+        	parent.innerHTML = a;
+    
+        	if (counter == $size) {
+    	    		document.getElementById('next').href = "?sort=$sort&xpath=$xpath&size=$size&order=ascending&query=" + encodeURI(end);
+        	} else {
+    	    		document.getElementById('nextcontainer').style.display = "none";
+        	}
+    
+        	var container = document.getElementById('datacontainer');
+        	container.style.display = "block";
+	}
+#else 
+	var hook = document.getElementById('datahook');
+    var a = "";
+	var counter = 0;
+	var blocks = 0;
+	var end = "";
+    for (var d in data) {
+    		blocks += 1;
+        	for (var r in data[d]) {
+			counter += 1;
+			a += "<tr class='" + ((blocks % 2 == 0) ? "even" : "odd") + "'>";
+			#if ($sort == "frequency")
+				end = data[d][r][1];
+			#elseif ($sort == "length")
+				end = data[d][r][0].length;
+			#else
+				end = data[d][r][0];
+			#end
+        		a +=  "<td>" + data[d][r][0] + "</td>";
+        		a +=  "<td class='number'>" + data[d][r][1] + "</td>";
+        		a +=  "<td class='number'>" + data[d][r][0].length + "</td>";
+            	a += "</tr>";
+        	}
+    }
+
+    	hook.innerHTML = a;
+
+    	if (counter == $size) {
+	    document.getElementById('next').href = "?sort=$sort&xpath=$xpath&size=$size&order=ascending&query=" + encodeURI(end);
+    	} else {
+	    document.getElementById('nextcontainer').style.display = "none";
+    	}
+
+	var container = document.getElementById('datacontainer');
+	container.style.display = "block";
+#end
+  }
+
+  function getTarget(e) {
+	var event;
+
+	if (!e) {
+		event = window.event;
+	} else {
+		event = e;
+	}
+
+	var targ;
+	if (event.target) {
+	   targ = event.target;
+	} else if (event.srcElement) {
+	   targ = event.srcElement;
+	}
+	return targ;
+  } 
+  
+  function search(evt) {
+	evt = (evt) ? evt : event;
+
+	var charCode = (evt.charCode) ? evt.charCode : ((evt.which) ? evt.which : evt.keyCode);
+	if (charCode == 13 || charCode == 3) {
+		var textbox = getTarget(evt);
+		var text = textbox.value;
+
+		window.location = "?sort=$sort&xpath=$xpath&size=$size&order=ascending&query=" + encodeURI(text);
+	}
+  }
+  
+  function comparator(a,b) {
+  	if (a[1] == b[1]) {
+		return b[0].length - a[0].length;
+	} else {
+		return b[1] - a[1];
+	}
+  }
+  
+ </script>
+ <style>
+	.types {
+		text-align: center;
+		margin: 1em;
+	}
+    .chart {
+        	text-align: center;
+        	margin: 2em 1em;
+    }
+	.chart .label {
+		color: #888;
+	}
+	.chart .description {
+		margin-top: 1em;
+		text-align: center;
+	}
+    .sparkline {
+		border: 1px solid #eee;	
+        background: #fff url("../images/body_back.gif") +0px -20px repeat-x;
+    }
+	.navigation {
+		margin: 2em;
+	}
+	.title {
+		background-color: #f0f0f0;
+	}
+	table.data {
+		margin-top: 2em;
+	}
+	table.data thead, table.data tfoot {
+        background: #fff url("../images/body_back.gif") +0px -20px repeat-x;
+	}
+	table.data input {
+		border: 1px solid #aaa;
+		color: #aaa;
+		padding: 1px 3px;
+		width: 10em;
+		margin-left: 0.3em;
+	} 
+	table.data td.number {
+		text-align: right;
+	}
+	tbody.cluster {
+		border: 2px solid #aaa;
+	}
+	#message {
+		font-size: 120%;
+		text-align: center; 
+		padding: 1em; 
+		border: 1px solid #ccc; 
+		margin: 3em 30%;
+		color: #009900
+	}
+	.clusters {
+		float: right;
+	}
+	.sorted {
+		color: #aa0000;
+	}
+ </style>    
+</head>
+
+<body onload="init()">
+
+<div id="top">
+ <ul class="path">
+    <li><a href="../">Datasets</a></li>
+	#set ($dv = $datasets.get($dataset))
+	#if ($dv.properties)
+		#set ($name = $dv.properties.get("name"))
+	#else
+		#set ($name = $dataset)
+	#end
+    <li><a href="./">$name</a></li>
+    <li class="current">$xpath</li>
+ </ul>
+</div>
+
+<div id="header">
+ <h1><a href="../" title="Gadget">Gadget</a></h1>
+ <ul>
+  #foreach($d in $datasets.keySet())
+	#set ($dv = $datasets.get($d))
+	#if ($dv.properties)
+		#set ($name = $dv.properties.get("name"))
+	#else
+		#set ($name = $d)
+	#end
+	#if ($d.equals($dataset))
+     <li class="current"><a href="../$dataset/">$name</a></li>
+	#else
+	 <li><a href="../$d/">$name</a></li>
+	#end
+  #end
+ </ul>
+ <div class="searchbox">
+   <label> </label>
+ </div>
+</div>
+
+<div id="body">
+<div class="clusters">
+     #if ($sort == "clusters")
+      <a href="?sort=value&xpath=$xpath&query=$query&size=$size&order=$order">Show all values</a> | Show only clusters
+     #else 
+	  Show all values | <a href="?sort=clusters&xpath=$xpath&query=$query&size=$size&order=$order">Show only clusters</a>
+	 #end
+</div>
+	
+ <h2><a href="../$dataset/" title="Go back to $dataset">$xpath</a></h2>
+
+ <table width="100%">
+	<tr>
+		<td width="30%" valign="top" align="center">
+             <table class="chart">
+				<tr>
+					<td valign="top" align="right"><span class="label">Count (log)</span></td>
+					<td valign="top" align="right">
+						<div><img class="sparkline" src="chart?type=frequency&size=big&xpath=$xpath"/></div>
+						<div class="label">Rank (log)</div>
+				    </td>
+				</tr>
+			 </table>
+             <table class="chart">
+				<tr>
+					<td valign="top" align="right"><span class="label">Count</span></td>
+					<td valign="top" align="right">
+						<div><img class="sparkline" src="chart?type=length&size=big&xpath=$xpath"/></div>
+						<div class="label">String Length</div>
+						<div class="description">average length is $path.averageLength characters</div>
+					</td>
+				</tr>
+			</table>
+             <div id="footer">
+                <a href="http://simile.mit.edu/" title="The SIMILE Project"><img src="../images/simile_logo.png"/></a>
+             </div>
+		</td>
+		<td width="70%" valign="top" align="center">
+ 
+     <div id="datacontainer" style="display: none">
+
+	<div style="font-size: 120%; margin-top: 1em">$path.uniques unique values out of $path.frequency occurrences</div>
+
+      <table class="data" width="100%" style="margin-left: 2em">
+        <thead>
+            <tr>
+                <td nowrap="true" width="100%">
+    				#if ($sort == "value") 
+					#set ($message = "Type value to jump to")
+    					<span class="sorted">Value <img src="../images/open.png"/>
+						<input value="$message" type="text" onkeyup="search(event)" 
+							onfocus="if(this.value=='$message') this.value=''"  
+							onblur="if(this.value=='') this.value='$message'"
+						/>
+					</span>
+    				#elseif ($sort == "clusters")
+					#set ($message = "Type value to jump to")
+    					<span>Value
+						<input value="$message" type="text" onkeyup="search(event)" 
+							onfocus="if(this.value=='$message') this.value=''"  
+							onblur="if(this.value=='') this.value='$message'"
+						/>
+					</span>
+				#else
+    					<a href="?sort=value&xpath=$xpath&size=$size&order=$order">Value</a>
+					<input type="text" disabled="true"/>
+    				#end
+    			</td>
+                <td nowrap="true">
+    				#if ($sort == "frequency") 
+    					<span class="sorted">Frequency <img src="../images/open.png"/></span>
+    				#elseif ($sort == "clusters")
+    					<span>Frequency</span>
+    				#else
+    					<a href="?sort=frequency&xpath=$xpath&size=$size&order=$order">Frequency</a>
+    				#end
+    			</td>
+                <td nowrap="true">
+    				#if ($sort == "length") 
+    					<span class="sorted">Length <img src="../images/open.png"/></span>
+    				#elseif ($sort == "clusters")
+    					<span>Length</span>
+    				#else
+    					<a href="?sort=length&xpath=$xpath&size=$size&order=$order">Length</a>
+    				#end
+    		   </td>
+            </tr>
+        </thead>
+      	<tbody id="datahook"/>
+		<tfoot>
+			<tr>
+				<td colspan="3">
+                     <table width="100%">
+					  <tr>
+                    		<td width="25%" align="left" nowrap="true" style="border: none">&nbsp;</td>
+                    		<td width="50%" align="center" nowrap="true" style="border: none"><small>Showing </small>
+                               #if ($size == "10") 
+                    				<span>10</span>,
+                               #else
+                    				<a href="?sort=$sort&xpath=$xpath&query=$query&size=10&order=$order">10</a>,
+                               #end
+                               #if ($size == "20") 
+                    				<span>20</span>,
+                               #else
+                    				<a href="?sort=$sort&xpath=$xpath&query=$query&size=20&order=$order">20</a>,
+                               #end
+                               #if ($size == "50") 
+                    				<span>50</span>,
+                               #else
+                    				<a href="?sort=$sort&xpath=$xpath&query=$query&size=50&order=$order">50</a>,
+                               #end
+                               #if ($size == "100") 
+                    				<span>100</span>
+                               #else
+                    				<a href="?sort=$sort&xpath=$xpath&query=$query&size=100&order=$order">100</a> 
+							 #end
+							 <small> values per page</small>
+                		    </td>
+                    		<td width="25%" align="right" nowrap="true" style="border: none">
+                    			<span id="nextcontainer"><a id="next" href="">next page</a> <img src="../images/arrow.gif"/></span>
+                    		</td>
+                        </tr>
+                     </table>
+				</td>
+			</tr>
+		</tfoot>
+     </table>
+     	 
+     </div>
+     
+     <div id="message" style="display: none">No Clusters were found</div>
+     
+	</td>
+</tr>
+</table>
+
+</div>
+
+
+</body>
+</html>

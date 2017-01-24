@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<a>
+
+ <!-- here is to see if we discover identifiers -->
+ <b>1</b>
+ <b>2</b>
+ <b>3</b> 
+ 
+ <!-- here is to see if we get the counting right -->
+ <c>aaaaaaaa</c>
+ <c>bbb</c>
+ <c>bbb</c>
+ <c>c</c>
+ <c>c</c>
+ <c>c</c>
+ 
+ <!-- here is to see if we get constants -->
+ <d>zzzzz</d>
+ <d>zzzzz</d>
+ <d>zzzzz</d> 
+
+ <!-- here is to see if we get attributes -->
+ <e f="a"/> 
+  
+ <!-- here is to see if we grok namespaces -->
+ <g:h xmlns:g="urn:a" xmlns="urn:b" h="a">b</g:h>
+
+ <!--+
+     | both foo's should be in the same table, 
+     | bar should be in another one (despite having the same prefix)
+     | and k should not end up having a prefix (because attributes don't follow the same rules as elements) 
+     +-->
+ <i xmlns="urn:c">foo</i>
+ <x:i xmlns:x="urn:c">foo</x:i>
+ <i xmlns="urn:d" k="a">bar</i> 
+
+ <!--+
+     | here we test for nested emtpy prefix, where 'x' is in the default namespace,
+     | while 'y' is in the "urn:e" namespace even if they both have no prefix
+     | 'z' is in the "urn:e" namespace as well
+     | while '@w' is not
+     +-->
+ <x>
+   <y xmlns="urn:e">
+    <z w="b">a</z>
+   </y>
+ </x>
+ 
+ <!--+
+     | here is where we deal with mixed content 
+     +-->
+ <l>
+   a
+    <m n="b">c</m>
+   d
+    <n:o xmlns:n="urn:e">e</n:o>
+   f
+ </l> 
+
+ <!--+
+     | here is where we deal with clustering 
+     +-->
+ 
+ <m>1837-1848</m>
+ <m>  , [2001-2003 ]: </m>
+ <m>	Dr. John Smith</m>
+ <m>Smith, John, 1925-1989</m>
+ <m>John Smith</m>
+ <m>George W. Bush</m>
+ <m>Bush, George W.</m>
+ <m>blah</m>
+ <m></m>
+
+ <!--+
+     | here is where we deal with weird json-ization 
+     +-->
+ 
+ <n>blah
+	blah</n>
+ <n>"blah" : [ "blah" , 3]</n>
+
+ <!--+
+     | here is where we deal with encoding in the values
+     +-->
+
+ <o>ẢẮḖǢĐḸŒAǾɗ</o>
+ <p>釈迦牟尼の略</p>
+
+ <!--+
+     | here is where we deal with encoding in both values and schemas
+     +-->
+     
+ <摩 xmlns:母="http://blah.jp/blah#">
+  <出>釈迦牟尼の略</出>
+  <尼>同じ釈迦<われ>族である</われ>隣国</尼>
+  <耶 xmlns="urn:empty:namespace">
+   <を>
+    <母:ようこ>同して</母:ようこ>
+   </を>
+  </耶>
+ </摩>
+ 
+</a>  

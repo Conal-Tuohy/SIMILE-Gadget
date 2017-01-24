@@ -1,0 +1,70 @@
+#!/bin/sh
+#
+# Configuration variables
+#
+# JAVA_HOME
+#   Home of Java installation.
+#
+# JAVA_OPTIONS
+#   Extra options to pass to the JVM
+#
+# JAVA_MODE
+#   Which mode to run the JVM in (see below for a list)
+#
+
+# ----- Verify and Set Required Environment Variables -------------------------
+
+if [ "$JAVA_HOME" = "" ] ; then
+  echo You must set JAVA_HOME to point at your Java Development Kit installation
+  exit 1
+fi
+
+if [ "$JAVA_OPTIONS" = "" ] ; then
+  JAVA_OPTIONS='-Xms32M -Xmx512M -Djava.awt.headless=true'
+fi
+
+# ----- Set mode-specific variables
+
+case "$JAVA_MODE" in
+  debug)
+        JAVA_X_ARGS='-Xdebug -Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=n'
+        ;;
+
+  profile)
+        JAVA_X_ARGS='-Xrunhprof:heap=all,cpu=samples,thread=y,depth=3'
+        ;;
+
+  shark)
+        JAVA_X_ARGS='-Xrunshark'
+        ;;
+
+  jmx)
+        JAVA_X_ARGS='-Dcom.sun.management.jmxremote'
+        ;;
+
+  yourkit)
+        JAVA_X_ARGS='-agentlib:yjpagent'
+        ;;
+esac
+
+# ----- Set platform specific variables ---------------------------------------
+
+PATHSEP=":";
+case "`uname`" in
+   CYGWIN*) PATHSEP=";" ;;
+esac
+
+# ----- Set Local Variables ( used to minimize cut/paste) ---------------------
+
+JAVA="$JAVA_HOME/bin/java"
+PARSER="-Dorg.xml.sax.parser=org.apache.xerces.parsers.SAXParser"
+LOADER="Loader"
+LOADER_LIB="./tools/loader/classes"
+MAIN="-Dloader.main.class=edu.mit.simile.gadget.Gadget"
+LIBRARIES="-Dloader.jar.repositories=target/classes:target:lib"
+
+# ----- Do the action ----------------------------------------------------------
+
+$JAVA $JAVA_OPTIONS $JAVA_X_ARGS -cp $LOADER_LIB $LIBRARIES $PARSER $MAIN $LOADER $*
+
+exit 0

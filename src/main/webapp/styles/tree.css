@@ -1,0 +1,22 @@
+ /* Turn off list bullets */
+ ul.tree  li { list-style: none; } 
+
+/* Control how "spaced out" the tree is */
+ ul.tree, ul.tree ul , ul.tree li { margin-left:10px; padding:0px; }
+
+/* Provide space for our own "bullet" inside the LI */
+ ul.tree  li         .bullet { padding-left: 15px; }
+ ul.tree  li.open    .bullet { cursor: pointer; background: url(../images/minus.gif)  center left no-repeat; }
+ ul.tree  li.closed  .bullet { cursor: pointer; background: url(../images/plus.gif)   center left no-repeat; }
+ ul.tree  li.libullet  .bullet { cursor: default; background: url(../images/bullet.gif) center left no-repeat; }
+
+/* Sublists are visible or not based on class of parent LI */
+ ul.tree  li.open    ul { display: block; }
+ ul.tree  li.closed  ul { display: none; }
+
+/* Format menu items differently depending on what level of the tree they are in 
+ ul.tree  li { font-size: 12pt; }
+ ul.tree  li ul li { font-size: 11pt; }
+ ul.tree  li ul li ul li { font-size: 10pt; }
+ ul.tree  li ul li ul li ul li { font-size: 9pt; }
+ */

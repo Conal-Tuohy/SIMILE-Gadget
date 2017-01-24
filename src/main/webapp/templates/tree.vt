@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+ <title>Gadget | $dataset</title>
+ <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+ <link rel="stylesheet" type="text/css" href="../styles/main.css" media="screen"/>
+ <link rel="stylesheet" type="text/css" href="../styles/tree.css" media="screen"/>
+ <link rel="stylesheet" type="text/css" href="../styles/print.css" media="print"/>
+ <link rel="stylesheet" type="text/css" href="../styles/base/content.css" media="all"/>
+ <link rel="stylesheet" type="text/css" href="../styles/cavendish/content.css" title="Cavendish" media="all"/>
+ <link rel="stylesheet" type="text/css" href="../styles/base/template.css" media="screen"/>
+ <link rel="stylesheet" type="text/css" href="../styles/cavendish/template.css" title="Cavendish" media="screen"/>
+ <script src="../scripts/controls.js" type="text/javascript">//</script>
+ <script src="tree" type="text/javascript">//</script>
+ <script>
+   function printTree() {
+   	var hook = document.getElementById('treehook');
+	var a = "";
+	for (var node in tree) {
+   		a += "<table class='tree'>";
+		a += "<thead><tr><th width='100%'>xpath</th><th>count</th><th>uniques</th><th></th><th>length	</th><th></th></tr></thead>";
+		a += printNode(node,tree[node],0);
+		a += "</table>";
+	}
+	hook.innerHTML = a;
+  }
+   	
+  function printNode(name, node, level) {
+    var type = node.type ;
+	if (type == "empty" && node.children) type = '';
+	var a = "<tr class='" + type + "' id='" + node.xpath + "'>";
+	a += "<td width='100%'>";
+	a += "<span style='padding-left: " + level + "em;'/>";
+	if (node.children) {
+		a += "<img onclick='toggle(\"" + node.xpath + "\")' id='" + node.xpath + "_toggle' status='open' style='cursor: pointer; padding-right: 0.3em' src='../images/open.png'/>";
+	} else {
+		a += "<img style='padding-right: 0.3em' src='../images/bullet.png'/>";
+	}	
+	if (node.type != "empty") {
+		a += "<a class='" + node.type + "' href='values?xpath=" + node.xpath + "'>" + name + "</a>";
+		a += "</td>";
+		a += "<td align='right'>" + node.frequency + "</td>";
+		a += "<td align='right'>" + node.uniques + "</td>";
+		a += "<td align='center'><a title='Y = Count (log) vs. X = Rank (log)' href='values?sort=frequency&xpath=" + node.xpath + "'><img class='sparkline' src='chart?type=frequency&size=small&xpath=" + node.xpath + "'/></a></td>";
+		a += "<td align='right'>" + node.length + "</td>";
+		a += "<td align='center' style='padding-right: 1em'><a title='Y = Count vs. X = Length' href='values?sort=length&xpath=" + node.xpath + "'><img class='sparkline' src='chart?type=length&size=small&xpath=" + node.xpath + "'/></a></td>";
+	} else {
+		a += name;
+		a += "</td>";
+		a += "<td align='right'>" + node.frequency + "</td>";
+		a += "<td></td>";
+		a += "<td></td>";
+		a += "<td></td>";
+		a += "<td></td>";
+	}
+	a += "</tr>";
+	level++;
+	for (var n in node.children) {
+		a += printNode(n, node.children[n], level);
+	}
+	return a;
+   }
+   
+   function toggle(xpath) {
+	var img = document.getElementById(xpath + "_toggle");
+	if (img.getAttribute('status') == 'open') {
+       	var level = getLevel(xpath);
+        var element = document.getElementById(xpath);
+        	while (element.nextSibling) {
+        		element = element.nextSibling;
+        		if (getLevel(element.id) > level) {
+        			element.hidden = element.style.display;
+        			element.style.display = "none";
+        		} else {
+        			break;
+        		}
+        	}
+		img.setAttribute('status','closed');
+	} else if (img.getAttribute('status') == 'closed') {
+       	var level = getLevel(xpath);
+        var element = document.getElementById(xpath);
+        	while (element.nextSibling) {
+        		element = element.nextSibling;
+        		if (getLevel(element.id) > level) {
+        			element.style.display = element.hidden;
+        		} else {
+        			break;
+        		}
+        	}
+		img.setAttribute('status','open');
+	} else {
+		return;
+	}	
+	img.src = "../images/" + img.getAttribute('status') + ".png";
+   }
+   
+   function getLevel(xpath) {
+   	return xpath.split('/').length;
+   }
+   	
+ </script>
+ <style>
+	.tree {
+		padding-bottom: 2em;
+	}
+	.details {
+		color: #888;
+	}
+	.active {
+		font-size: 90%;
+	}
+	.legend {
+		border: 1px solid #eee;
+		padding: 0em 1em;
+		margin: 0em 4em;
+		margin-top: 1em;
+	}
+	.legend ul {
+		margin-left: 0em;
+		padding-left: 1.5em;
+	}
+	.legend li {
+		padding-bottom: 0.3em;
+	}
+	.controls {
+		margin-top: 1em;
+	}
+	.description {
+		margin-bottom: 1em;
+	}
+	.tree {
+        border-collapse: collapse;
+        border: 1px solid #ccc;
+    }
+    thead {
+        background: transparent url("../images/path_back.gif") left repeat-x;
+    }
+    .tree th,
+    .tree td {
+        padding: 0.2em;
+    }
+    .tree th {
+		text-align: left;
+        border: 1px solid #ccc;
+    }
+    .tree td {
+        border-bottom: 1px solid #eee;
+    }
+    .tree tr:hover { 
+	    background-color: #ffff80; 
+	}		
+    .tree thead tr:hover { 
+        background: transparent url("../../images/path_back.gif") left repeat-x;
+	}
+	a img.sparkline { 
+		border: 1px solid #eee; 
+	}
+	#treehook {
+		height: 40em;
+		overflow: auto;
+		border: 1px solid #ccc;
+		margin-left: 2em;
+	}
+ </style>
+</head>
+
+<body onload="printTree()">
+
+<div id="top">
+ <ul class="path">
+    <li><a href="../">Datasets</a></li>
+	#set ($datasetv = $datasets.get($dataset))
+	#if ($datasetv.properties)
+		#set ($name = $datasetv.properties.get("name"))
+	#else
+		#set ($name = $dataset)
+	#end
+    <li class="current">$name</li>
+ </ul>
+</div>
+
+<div id="header">
+ <h1><a href="../" title="Gadget">Gadget</a></h1>
+ <ul>
+  #foreach($d in $datasets.keySet())
+	#set ($dv = $datasets.get($d))
+	#if ($dv.properties)
+		#set ($name = $dv.properties.get("name"))
+	#else
+		#set ($name = $d)
+	#end
+	#if ($d.equals($dataset))
+     <li class="current"><a href="../$dataset/">$name</a></li>
+	#else
+	 <li><a href="../$d/">$name</a></li>
+	#end
+  #end
+ </ul>
+ <div class="searchbox">
+   <label> </label>
+ </div>
+</div>
+
+<div id="body" >
+ <table width="100%" cellpadding="0" cellspacing="0">
+  <tr>
+	<td valign="top">
+		
+	#if ($datasetv.properties.get("description"))
+		<div class="description">$datasetv.properties.get("description")</div>
+	#end
+ 
+<table class="data" style="margin-top: 0em">
+    <thead>
+        <tr>
+            <td>prefix</td>
+            <td>namespace URI</td>
+        </tr>
+    </thead>
+    <tbody>
+        #foreach($prefix in $namespacesPrefixes)
+  		 #if ($namespacesMap.get($prefix) != "") 
+            <tr>
+				#if ($prefix == "")
+                   <td>&nbsp;</td>
+				#else
+				  <td>$prefix</td>
+				#end
+                 <td><a href="$namespacesMap.get($prefix)">$namespacesMap.get($prefix)</a></td>
+            </tr>
+		  #end
+        #end
+    </tbody>
+ </table>
+ 
+ <div class="legend">
+	<h4>Color Codes</h4>
+	<ul>
+		<li><span class="identifier">identifier</span> - every time the path was found, it contained a <b>different value</b></li>
+		<li><span class="constant">constant</span> - every time the path was found, it contained the <b>same value</b></li>
+		<li><span class="empty">empty</span> - every time the path was found, it contained <b>no values</b></li>
+	</ul>
+	<h4>Path Info</h4>
+	<ul>
+		<li><b>xpath</b> - name of the element or attribute</li>
+		<li><b>count</b> - how many values were found in this path</li>
+		<li><b>uniques</b> - how many <b>unique</b> values were found</li>
+		<li><b>length</b> - the average character lenght of the values</li>
+	</ul>
+ </div>
+
+ <div id="footer">
+    <a href="http://simile.mit.edu/" title="The SIMILE Project"><img src="../images/simile_logo.png"/></a>
+ </div>
+ 
+	</td>
+	<td width="60%" valign="top">
+
+	<div id="treehook">loading...</div>
+
+ <div class="controls">
+	<a class="toggle" href="#" onclick="toggleIdentifiers('TR')" id="toggleIdentifiers">hide identifiers</a>
+	|
+	<a class="toggle" href="#" onclick="toggleConstants('TR')" id="toggleConstants">hide constants</a>
+	|
+	<a class="toggle" href="#" onclick="toggleSparklines('IMG')" id="toggleSparklines">hide sparklines</a>
+ </div>
+
+	</td>
+  </tr>
+ </table>
+ 
+</div>
+
+</body>
+</html>

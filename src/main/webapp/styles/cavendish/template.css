@@ -1,0 +1,254 @@
+/* 
+ * mozilla.org Cavendish Template Styles
+ * Initial Design by Daniel Burka and Steven Garrity
+ * Cleaned up for Gump by Stefano Mazzocchi
+ */
+
+/* Basic Structure */
+
+    body {
+        padding: 0px;
+        margin: 0px;
+        background: #fff url("../../images/body_back.gif") +0px +20px repeat-x;
+    }
+    
+    #top {
+        padding: 0px;
+        margin: 0px;
+    }
+    
+    #center {
+    }
+    
+    #bottom {
+    }
+    
+    #body {
+        margin: 2em;
+    }
+
+/* Header */
+
+    #header {
+        background: #455372 url("../../images/header_bl.png") bottom left repeat-x;
+        position: relative;
+        min-height: 39px;
+        height: 5em;
+        voice-family: "\"}\"";
+        voice-family: inherit;
+        height: 3em;
+        padding: 15px 0;
+        margin: 1em;
+    } 
+        
+    #header h1 {
+        position: absolute;
+        top: 0;
+        left: 0;
+        margin: 0;
+        font-size: 2px;
+        background: url("../../images/header_tl.gif") no-repeat;
+        height: 8px;
+        z-index: 100; /* above the UL */
+    }
+    #header h1 a {
+        display: block;
+        position: relative;
+        width: 183px;
+        height: 50px;
+        top: 10px;
+        left: 10px;
+        background: transparent url("../../images/logo.png") no-repeat;
+        text-indent: -700em;
+        text-decoration: none;
+        font-family: verdana, sans-serif;
+    }
+    #header ul {
+        width: auto;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        margin: 0;
+        padding: 0 15px 0 0;
+        list-style: none;
+        background: url("../../images/header_br.gif") no-repeat bottom right;
+        z-index: 90; /* below the H1 */
+    }
+    #header li {
+        float: right;
+        background: transparent url("../../images/header_tab.gif") 100% -600px no-repeat;
+        padding: 0 6px 0 0;
+        margin: 0 3px 0 0;
+        border: 0px;
+    }
+    #header li.current { border: 0px; }
+    #header ul a , #header ul span {
+        float: left;
+        display: block;
+        padding: 4px 4px 4px 10px;
+        background: transparent url("../../images/header_tab.gif") 0% -600px no-repeat;
+        font-weight: bold;
+        color: #fff;
+    }
+    #header ul li:hover a { background-position: 0% -400px; }
+    #header ul li:hover { background-position: 100% -400px; }
+
+    #header li.current span , #header li.current a { background-position: 0% -200px; color: #333; }
+    #header li.current { background-position: 100% -200px; }
+    #header li:hover.current span , #header li:hover.current a { background-position: 0% 0px; color: #333; }
+    #header li:hover.current { background-position: 100% 0px; }	
+    
+/* Search Field */
+
+    #header .searchbox {
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 12px 20px 0 0;
+        background: url("../../images/header_tr.gif") no-repeat top right;
+        margin: 0; /* need for IE Mac */
+        text-align: right; /* need for IE Mac */
+        white-space: nowrap; /* for Opera */
+    }
+    #header .searchbox label { color: #D9DBE1; font-size: 85%; }
+    #header .searchbox input { 
+        font-size: 85%;
+        padding: 2px 4px 2px 4px;
+        border-right: 1px solid #9097A2;
+        border-bottom: 1px solid #9097A2;
+        border-top: 1px solid #283043;
+        border-left: 1px solid #283043;
+        background: #D9DBE1;
+    }
+
+/* Path */
+
+    .path {
+        background: transparent url("../../images/path_back.gif") left repeat-x;
+        border-bottom: 1px solid #bbb;
+        margin: 0px;
+        padding: 4px 8px;
+    }
+    .path li {
+        font-size: 90%;
+        display: inline;
+        list-style-type: none;
+        padding-right: 20px;
+        padding-left: 4px;
+        background: transparent url("../../images/arrow.gif") center right no-repeat;
+    }
+    .path li.current {
+        background: none;
+    }
+    
+/* Sidebar */
+
+    #nav:before {
+        line-height: 0.1;
+        font-size: 1px;
+        background: transparent url("../../images/menu_tr.gif") no-repeat top right;
+        margin: 0;
+        height: 9px;
+        display: block;
+        border-bottom: 1px solid #ddd;
+        content: url("../../images/key-point_tl.gif");
+    }
+    #nav {
+        background: #E0E9E9 url("../../images/menu_back.gif") right repeat-y;
+        margin-bottom: 1em;
+    }
+    #nav:after {
+        display: block;
+        padding-top: 0;
+        line-height: 0.1;
+        font-size: 1px;
+        content:  url("../../images/key-point_bl.gif");
+        margin: 0 0 0 0;
+        height: 8px;
+        background: transparent url("../../images/menu_br.gif") scroll no-repeat bottom right ;
+        border-top: 1px solid #fff;
+    }
+    
+    #nav, #nav ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+    #nav li {
+        display: inline;
+        padding: 0;
+        margin: 0;
+    }
+    
+    #nav li span { /* used for un-linked menu items */
+        display: block;
+        padding: 6px 8px;
+        color: #666;
+    }
+    
+    #nav li span.description {
+        font-size: 80%;
+    }
+
+    #nav li a span.description {
+        display: none;
+    }
+
+    #nav li a:hover span.description {
+        display: block;
+    }
+    
+    #nav li a {
+        display: block;
+        padding: 6px 8px;
+        text-decoration: none;
+        background: #EDF2F2;
+        border-bottom: 1px solid #ddd;
+        border-top: 1px solid #fff;
+        border-right: 1px solid #ddd;
+    }
+
+    #nav li a:hover {
+        background: #E0E9E9;
+    }
+
+/* Footer */
+
+    #footer {
+        margin: 1em 0;
+        padding: 1em 0;
+        text-align: center;
+        border: 0px;
+    }
+    
+    #footer ul {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+    
+    #footer li {
+        display: inline;
+    }
+    
+    #footer span,#footer a {
+        white-space: nowrap;
+        padding: 0 1em;
+    }
+    
+    #footer p span,#footer p a {
+        white-space: nowrap;
+        padding: 0 0.3em;
+    }
+    
+    #footer span a {
+        padding: 0;
+    }
+    
+    #footer p,#footer p a {
+        color: #666;
+    }
+    
+    #footer p a:hover {
+        color: #000;
+    }

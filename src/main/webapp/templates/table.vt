@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+ <title>Gadget | $dataset</title>
+ <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+ <link rel="stylesheet" type="text/css" href="../styles/main.css" media="screen"/>
+ <link rel="stylesheet" type="text/css" href="../styles/print.css" media="print"/>
+ <link rel="stylesheet" type="text/css" href="../styles/base/content.css" media="all"/>
+ <link rel="stylesheet" type="text/css" href="../styles/cavendish/content.css" title="Cavendish" media="all"/>
+ <link rel="stylesheet" type="text/css" href="../styles/base/template.css" media="screen"/>
+ <link rel="stylesheet" type="text/css" href="../styles/cavendish/template.css" title="Cavendish" media="screen"/>
+ <script src="../scripts/controls.js" type="text/javascript">//</script>
+ <style>
+    .controls {
+        	margin-bottom: 1em;
+    }
+    tr:hover { 
+	    background-color: #ffff80; 
+	}
+	a img.sparkline { 
+		border: 1px solid #eee; 
+	}
+ </style>    
+</head>
+
+<body>
+
+<div id="top">
+ <ul class="path">
+    <li><a href="../">Datasets</a></li>
+	#set ($dv = $datasets.get($dataset))
+	#if ($dv.properties)
+		#set ($name = $dv.properties.get("name"))
+	#else
+		#set ($name = $d)
+	#end
+    <li class="current">$name</li>
+ </ul>
+</div>
+
+<div id="header">
+ <h1><a href="../" title="Gadget">Gadget</a></h1>
+ <ul>
+  <li class="current"><span>Table View</span></li>
+  <li><a href="./" title="Tree View">Tree View</a></li>
+ </ul>
+ <div class="searchbox">
+   <label> </label>
+ </div>
+</div>
+
+<div id="body">
+
+ <div class="controls">
+	<a class="toggle" href="#" onclick="toggleIdentifiers('TR')" id="toggleIdentifiers">hide identifiers</a>
+	|
+	<a class="toggle" href="#" onclick="toggleConstants('TR')" id="toggleConstants">hide constants</a>
+	|
+	<a class="toggle" href="#" onclick="toggleSparklines('IMG')" id="toggleSparklines">hide sparklines</a>
+ </div>
+ 
+ <table class="data">
+    <thead>
+        <tr>
+            <td><a href="?sort=xpath">XPath</a></td>
+            <td><a href="?sort=frequency">Frequency</a></td>
+            <td><a href="?sort=uniques">Uniques</a></td>
+            <td>&nbsp;</td>
+            <td><a href="?sort=length">Length</a></td>
+            <td>&nbsp;</td>
+        </tr>
+    </thead>
+    <tbody>
+        #foreach($path in $paths)
+			#if ($path.type != "empty") 
+                <tr class="$path.type">
+                    <td><a class="$path.type" href="values?xpath=$path.xpath">$path.xpath</a></td>
+                    <td align="right">$path.frequency</td>
+                    <td align="right">$path.uniques</td>
+				   <td align="center"><a href="values?xpath=$path.xpath&sort=frequency"><img class="sparkline" src="chart?type=frequency&type=small&xpath=$path.xpath"/></a></td>
+                    <td align="right">$path.averageLength</td>
+				   <td align="center"><a href="values?xpath=$path.xpath&sort=length"><img class="sparkline" src="chart?type=length&type=small&xpath=$path.xpath"/></a></td>
+                </tr>
+			#end
+        #end
+    </tbody>
+ </table>
+  
+</div>
+
+<div id="footer">
+    <a href="http://simile.mit.edu/" title="The SIMILE Project"><img src="../images/simile_logo.png"/></a>
+</div>
+
+</body>
+</html>

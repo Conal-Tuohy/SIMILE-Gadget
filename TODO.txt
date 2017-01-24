@@ -1,0 +1,7 @@
+
+ TODO
+ ----
+ 
+  o  fix mixed mode
+  
+  o  fix encoding

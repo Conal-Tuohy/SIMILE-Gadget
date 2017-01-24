@@ -5,15 +5,15 @@
 	<name xml:lang="en-US" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Gadget</name>
 	<homepage rdf:resource="http://simile.mit.edu/gadget/" />
 	<created>2004-07-05</created>
-	<shortdesc xml:lang="en-US" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Gadget is a command line XML inspector.</shortdesc>
-	<description xml:lang="en-US" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Gadget is a command line XML inspector.</description>
+	<shortdesc xml:lang="en-US" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Gadget is an XML inspector.</shortdesc>
+	<description xml:lang="en-US" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Gadget is an XML inspector.</description>
 
 	<mailing-list rdf:resource="http://simile.mit.edu/mail.html" />
 
 	<maintainer>
 		<foaf:Person>
 			<foaf:name xml:lang="it" rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Stefano Mazzocchi</foaf:name>
-			<foaf:homepage rdf:resource="http://betaversion.org/~stefano/" />
+			<foaf:homepage rdf:resource="http://www.betaversion.org/~stefano/" />
 		</foaf:Person>
 	</maintainer>
 
@@ -22,6 +22,13 @@
 		<Version>
 			<created>2004-07-15</created>
 			<revision>1.0</revision>
+		</Version>
+	</release>
+
+	<release>
+		<Version>
+			<created>2006-03-20</created>
+			<revision>2.0</revision>
 		</Version>
 	</release>
 

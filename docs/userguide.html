@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <title>SIMILE | Gadget | User's Guide</title>
+  <link rel="stylesheet" href="http://simile.mit.edu/styles/default.css" type="text/css"/>
+  <style>
+     #body {
+        margin-bottom: 220px;
+     }
+    </style>
+</head>
+<body>
+<!--#include virtual="sidebar.html" -->
+<ul id="path">
+  <li><a href="http://simile.mit.edu/" title="Home">SIMILE</a></li>
+  <li><a href="http://simile.mit.edu/gadget/" title="Home">Gadget</a></li>
+  <li><span>User's Guide</span></li>
+</ul>
+<div id="body">
+<h1>User's Guide</h1>
+
+<h2><a name="how_to_run"></a>How to run Gadget</h2>
+
+<p>In order to run Gadget you need the following:<p>
+<ol>
+ <li>a Java Virtual Machine version 1.4 or above [get one from <a href="http://www.java.com/">here</a>]</li>
+ <li>Apache Maven version 2.0 or above [get it from <a href="http://maven.apache.org/">here</a>]</li>
+</ol>
+<p>Once you have installed those, make sure you are online since Maven requires
+to download libraries from its central repository and from the SIMILE repository, then
+open your favorite unix shell or the windows DOS prompt type:</p>
+<pre>1> mvn package
+2> ./gadget index -o data/blah -r /path/to/your/pile/of/xml/
+3> ./gadget chart data/blah
+4> mvn jetty6:run</pre>
+<p class="note">On windows, use "gadget" instead of "./gadget".
+<p>Then point your browser to <a href="http://127.0.0.1:8080/">http://127.0.0.1:8080/</a> to access Gadget.</p>
+<p class="note">If you get an error, jetty is probably still loading the web application, wait a few seconds and then hit
+reload on your browser.</p>
+
+<p>Here is a breakdown of what the above steps do:</p>
+
+<ul>
+ <li><b>Step 1</b> - builds gadget and fetches the required libraries from the web. 
+            This step has to be performed only once or everytime you modify Gadget's source code.</li>
+ <li><b>Step 2</b> - generates the gadget indices used by the web application by
+            processing your XML data. Since the -r option is turned on, 
+            it will recursively scan the given directory for all the *.xml 
+            files, process them and save the indices in 'data/blah'.</li>
+ <li><b>Step 3</b> - generates the distribution charts and the sparklines. This
+            stage is optional, meaning that the web application will perform 
+            the same operation at runtime if not performed before, but if your 
+            dataset is large it's better to pre-compute them to increase the 
+            gadget's startup performance when browsing.</li>
+ <li><b>step 4</b> - runs the gadget web application and provides you a user interface
+            way to access the generated indices via your web browser.</li>
+</ul>
+
+</div>
+<!--#include virtual="../footer.html" -->
+</body>
+</html>

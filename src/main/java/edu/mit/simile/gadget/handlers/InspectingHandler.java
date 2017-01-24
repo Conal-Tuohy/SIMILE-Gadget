@@ -1,106 +1,56 @@
-/*
- *
- */
 package edu.mit.simile.gadget.handlers;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.io.File;
+import java.util.Properties;
 
-import org.apache.commons.codec.digest.DigestUtils;
-import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 
-import edu.mit.simile.gadget.Result;
+import com.sleepycat.je.DatabaseException;
 
-/**
- *
+import edu.mit.simile.gadget.data.Dataset;
+import edu.mit.simile.gadget.data.Namespaces;
+
+/** 
+ * This is the SAX handler that accepts SAX events from the XML parser
+ * and records useful events into the databases.
+ * 
+ * @author Stefano Mazzocchi 
  */
-public class InspectingHandler extends AbstractHandler {
-
-    public class Use {
-        private transient int frequency;
-
-        public Use() {
-            this.frequency = 1;
-        }
-
-        public void recordUse() {
-            this.frequency++;
-        }
-
-        public int getUse() {
-            return this.frequency;
+public class InspectingHandler extends Handler {
+    
+    Dataset dataset;
+    
+    public InspectingHandler(File folder, Properties p, boolean t) throws DatabaseException {
+        super(t);
+        dataset = Dataset.writeData(folder, p);
+        namespaces = new Namespaces(dataset.getNamespaces());
+    }
+    
+    public Dataset getDataset() {
+        return dataset;
+    }
+    
+    // --------------------------------------------------------------
+    
+    public void attribute(String uri, String name, String qname, String value) {
+        if (logger.isDebugEnabled()) logger.debug(" Attribute(" + uri + "," + name + "," + qname + "," + value + ")");
+        try {
+            cursor = cursor.descend(uri, name, qname, Dataset.ATTRIBUTE);
+            dataset.record(this.cursor.getPath(), value);
+            cursor = cursor.ascend();
+        } catch (DatabaseException e) {
+            logger.error("Problem saving attribute: " + qname + "=\"" + value + "\"", e);
         }
     }
-
-    public class XPath extends Use {
-        private transient Map uses;
-
-        public XPath() {
-            super();
-            this.uses = new HashMap(0,0.75f);
+    
+    public void endElement(String uri, String name, String qname) throws SAXException {
+        if (logger.isDebugEnabled()) logger.debug(" End Element(" + uri + "," + name + "," + qname + ")");
+        String value = getText();
+        try {
+            dataset.record(this.cursor.getPath(),value);
+        } catch (DatabaseException e) {
+            logger.error("Problem saving element: " + this.cursor.getPath() + "=\"" + value + "\"", e);
         }
-
-        public Map getUses() {
-            return this.uses;
-        }
+        cursor = cursor.ascend();
     }
-
-    private transient Map results = new HashMap();
-
-    public List getResults() {
-        List endResults = new ArrayList();
-        Iterator iterator = results.keySet().iterator();
-        while (iterator.hasNext()) {
-            String xpathStr = (String) iterator.next();
-            XPath xpath = (XPath) results.get(xpathStr);
-            int frequency = xpath.getUse();
-            Map uses = xpath.getUses();
-            int uniques = uses.keySet().size();
-            Result result = new Result(xpathStr,frequency,uniques);
-            endResults.add(result);
-        }
-        return endResults;
-    }
-
-    /** Start element. */
-    public void startElement(String uri, String local, String raw, Attributes attrs) throws SAXException {
-            super.startElement(uri,local,raw,attrs);
-            //if (this.textMode) {
-                // record this is a mixed mode element
-            //}
-            for (int i = 0; i < attrs.getLength(); i++) {
-                record(this.path.toPath() + "@" + attrs.getQName(i), attrs.getValue(i));
-            }
-    }
-
-    public void processText(String str) {
-        String trimmed = str.trim();
-        if (trimmed.length() > 0) {
-            record(this.path.toPath(),trimmed);
-        }
-    }
-
-    public void record(String xpathStr, String valueStr) {
-        XPath xpath;
-        if (results.containsKey(xpathStr)) {
-            xpath = (XPath) results.get(xpathStr);
-            xpath.recordUse();
-        } else {
-            xpath  = new XPath();
-            results.put(xpathStr, xpath);
-        }
-        Map uses = xpath.getUses();
-        String md5 = DigestUtils.md5Hex(valueStr);
-        if (uses.containsKey(md5)) {
-            Use use = (Use) uses.get(md5);
-            use.recordUse();
-        } else {
-            uses.put(md5,new Use());
-        }
-    }
-
 }

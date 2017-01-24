@@ -1,10 +1,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
   <title>SIMILE | Gadget</title>
-  <link rel="stylesheet" href="http://simile.mit.edu/styles/default.css"
- type="text/css">
+  <link rel="stylesheet" href="http://simile.mit.edu/styles/default.css" type="text/css"/>
   <style>
      #body {
         margin-bottom: 220px;
@@ -21,50 +20,58 @@
 <div id="body">
 <h1>Gadget</h1>
 <h2>What is this?</h2>
-<p>Gadget is a command line XML inspector. <small>[sound of inspector
-gadget theme playing in the back]</small> </p>
+<p>Gadget is an XML inspector. <small>[sound of inspector
+gadget theme playing in the back]</small></p>
+<p class="figure"><img src="images/screenshot.png" alt="Gadget Screenshot"/></p>
 <h2>What can I do with this?</h2>
-<p>You can understand how the internal structure of tons of XML "looks
-like".</p>
+<p>When you want to have a condensed representation of (normally, a lot!) of well-formed <a href="http://www.w3.org/XML/">XML</a> data.</p>
 <p>This is normally useful in situations like:</p>
 <ul>
+  <li>data understanding and exploration</li>
   <li>data migration/transformation</li>
   <li>data cleanup</li>
   <li>data complexity evaluation</li>
   <li>schema adherence understanding</li>
+  <li>schema emergence</li>
 </ul>
 <h2>Why was it built?</h2>
-<p>Well, because I was given the task of transforming a few hundreds of
+<p>I was given the task of transforming a few hundred Mb of
 XML into RDF and I found out (the hard way!) that with that amount of
 data things start to break down: you need radically different
-approaches since you can't simply open your XML document in your
-browser and read it.</p>
-<p>The first version of the program was a collection of 12-stages-long
-grep+sed+sort+uniq pipelines but that was not flexible enough for my
-needs.</p>
+approaches since you can't simply open your 100Mb XML document in your
+browser to take a look at it.</p>
+<p>Before writing Gadget I used a collection of 12-stages-long
+grep+sed+sort+uniq pipelines to understand what I had in that big XML pile, 
+but that started to become a little cumbersome so I wrote this.</p>
+<h2>How much data can it handle?</h2>
+<p>Gadget is built with scalability in mind and, in theory, there is no limit 
+to the amount of data it can handle. In practice, once the indexer starts hitting the disk
+things slow down considerably. If you can give your JVM as much as RAM as your
+XML data, you should be fine and the indexer should be very fast (1Mb/sec). 
+If not, the indexer will start hitting the disk and it can even become a few orders of magnitude
+slower (10Kb/sec).</p>
+<p>The indexer is the heavy-lifter; once that is done, the web application
+runs only off the indices and therefore is very fast and can scale to a lot of concurrent
+access. It is also completely stateless so it can be heavily parallelized horizontally in clusters
+would such a need emerge.</p>
 <h2>Requirements</h2>
-<p>Gadget is a command line application written in Java and requires:</p>
+<p>Gadget is composed of two parts, a command line application to index the data and 
+a web application to browse/search the results of the indexing process. Both are written 
+in Java and they require:</p>
 <ul>
   <li>A <a href="http://www.java.com/">Java 1.4</a> or later
 compatible virtual machine for your operating system.</li>
-  <li>the JAVA_HOME environment variable must be set to the
-installation directory of the java virtual machine in your system.</li>
+  <li><a href="http://maven.apache.org/">Maven 2.0</a> or above</li>
 </ul>
-<h2>Oh man, why Java?</h2>
-<p>All right, listen: I know some of you could rewrite this in, say,
-OCML, Ruby or Scheme in about 4 lines of code, but I can't. Ah, if
-anybody other there wants to port the approach to C I'd very much
-appreciate, but I don't want to waste my time, I'd much rather have CPU
-waster theirs. And besides, I grew allergic to pointers.</p>
 <h2>Ok, ok, I'm interested, now what?</h2>
-<p>Follow me to the <a href="guide.html">user guide</a> where we'll
+<p>Follow me to the <a href="userguide.html">user guide</a> where we'll
 see what we can do with this.</p>
 <h2>Where do I download it?</h2>
-<p>You can obtain Gadget in two different ways:<br>
+<p>You can obtain Gadget in two different ways:
 </p>
 <ol>
   <li>download a <a href="http://simile.mit.edu/dist/gadget/">prepackaged
-distribution</a><br>
+distribution</a>
   </li>
   <li>download the files directly from the code repository.</li>
 </ol>
@@ -72,25 +79,24 @@ distribution</a><br>
 example, if you want to have the latest and greatest development
 snapshot), you need to have a <a href="http://subversion.tigris.org/">Subversion</a>
 client installed. At this point, just type</p>
-<pre>svn co http://simile.mit.edu/repository/gadget/trunk/ gadget<br></pre>
+<pre>svn co http://simile.mit.edu/repository/gadget/trunk/ gadget</pre>
 <p>at the command line and the latest gadget distribution will appear
-in the "gadget" directory.<br>
+in the "gadget" directory.
 </p>
 <h2>Licensing and legal issues</h2>
-<p> Gadget is open source software and is licensed under the BSD
+<p>Gadget is open source software and is licensed under the BSD
 license located in the LICENSE.txt file located in the root of the
 distribution.</p>
-<p> Note however, that this software ships with libraries that are not
-released under the same license, that we are redistributing them
-untouched and each of them are licensed according to the terms of the
-license files located in the ./legal subdirectory of the distribution.</p>
+<p>Note however that this software depends on libraries that are not
+released under the same license. If you redistribute the software it's up to you
+to make sure that your redistribution complies to the sum of all the requirements
+not just to the ones of the Gadget license.</p>
 <h2>Credits</h2>
-<p>This software was created by the SIMILE project and originally
-written by: </p>
+<p>This software was created by the SIMILE project and originally designed, conceived and written by:</p>
 <ul>
-  <li><a href="http://www.betaversion.org/%7Estefano/">Stefano Mazzocchi</a>
-&lt;stefanom at mit.edu&gt;</li>
+  <li><a href="http://www.betaversion.org/~stefano/">Stefano Mazzocchi</a> &lt;stefanom at mit.edu&gt;</li>
 </ul>
+<p>Many thanks to David François Huynh &lt;dfhuynh at csail.mit.edu&gt; for the precious feedback on UI design and usability.</p>
 </div>
 <!--#include virtual="../footer.html" -->
 </body>

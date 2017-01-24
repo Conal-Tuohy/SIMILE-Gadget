@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+
+<head>
+ <title>Gadget</title>
+ <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+ <link rel="stylesheet" type="text/css" href="styles/print.css" media="print"/>
+ <link rel="stylesheet" type="text/css" href="styles/base/content.css" media="all"/>
+ <link rel="stylesheet" type="text/css" href="styles/cavendish/content.css" title="Cavendish" media="all"/>
+ <link rel="stylesheet" type="text/css" href="styles/base/template.css" media="screen"/>
+ <link rel="stylesheet" type="text/css" href="styles/cavendish/template.css" title="Cavendish" media="screen"/>
+ <style>
+	.padding {
+		padding: 3em;
+	}
+	.first {
+		font-size: 200%;
+	}
+	.name {
+		font-size: 120%;
+	}
+	.url {
+	}
+	.description {
+		margin: 1em 0em;
+	}
+	h3 {
+		margin-top: 0em;
+	}
+	#footer {
+		margin-top: 3em;
+	}
+ </style>
+</head>
+
+<body>
+
+<div id="top">
+ <ul class="path">
+    <li class="current">Datasets</li>
+ </ul>
+</div>
+
+<div id="header">
+ <h1><a href="http://simile.mit.edu/gadget/" title="Gadget Home Page">Gadget</a></h1>
+ <div class="searchbox">
+   <label> </label>
+ </div>
+</div>
+
+<div id="body">
+ <table width="100%" cellpadding="3em">
+	<tr>
+		<td width="50%">
+			<div class="padding">
+        			<p><span class="first">G</span>adget is an XML inspector. It is able to process 
+				large quantities of well-formed XML and produce a condensed summary of that data.</p>
+        			<p>For more information about the software, go to the <a href="http://simile.mit.edu/gadget/">project home page</a>.</p>
+                <div id="footer">
+                    <a href="http://simile.mit.edu/" title="The SIMILE Project"><img src="images/simile_logo.png"/></a>
+                </div>
+			</div>
+		</td>
+		<td width="50%" valign="top">
+			<div class="padding">
+                 <h3>Inspected Datasets</h3>
+                 <ul>
+                  #foreach($set in $datasets.keySet())
+    				#set ($dataset = $datasets.get($set))
+                     <li>
+                		#if ($dataset.properties)
+                			<div><a class="name" href="$set/">$dataset.properties.get("name")</a> [<a href="$dataset.properties.get("url")"/>$dataset.properties.get("url")</a>]</div>
+                		    <div class="description">$dataset.properties.get("description")</div>
+                		#else
+                			<a href="$set/">$set</a>
+                		#end
+                	    </li>
+                  #end
+                 </ul>
+			</div>
+		</td>
+	</tr>
+ </table>
+</div>
+
+
+</body>
+</html>

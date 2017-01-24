@@ -1,0 +1,88 @@
+/* 
+ * mozilla.org Base Template Styles
+ * Initial Design by Dave Shea
+ * Severely tweaked by David Baron
+ * Reorganized by fantasai
+ * Large Changes for new Cavendish default by Daniel Burka and Steven Garrity
+ * Cleaned up for Gump by Stefano Mazzocchi
+ */
+
+/* Basic Structure */
+
+    body {
+        min-width: 400px;
+    }
+
+    #center {
+        margin: 20px;
+    }
+    
+    #container {
+        max-width: 70em;
+        margin: 0 auto;
+    }
+    
+    #side {
+        float: left;
+        width: 23%;
+        margin-bottom: 1em;
+        margin-right: 1em;
+    }
+
+    #body {
+        margin: 0;
+    }
+
+    .withside {
+        margin-left: 25% ! important
+    }
+
+/* Header */
+
+    #header { margin-bottom: 1em; }
+    #header ul {
+        margin: 0 0 1em 0;
+        padding: 0;
+    }
+    
+    #header li {
+        display: inline;
+        padding: 0 20px 0 0;
+        margin: 0;
+        white-space: nowrap;
+    }
+
+/* Footer */
+
+    #footer {
+        clear: both;
+        margin-top: 1em;
+    }
+        
+    #footer ul {
+        margin: 0 0 1em 0;
+        padding: 0;
+    }
+    
+    #footer li {
+        display: inline;
+        padding: 0 20px 0 0;
+        margin: 0;
+        white-space: nowrap;
+    }
+    
+    #footer p {
+        margin: 0.6em 0;
+    }
+
+/* Accessibility Tweaks */
+
+    .skipLink {
+        position: absolute;
+        left: -999px;
+        width: 990px;
+    }
+    
+    hr.hide {
+        display: none;
+    }
