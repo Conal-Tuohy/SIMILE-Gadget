@@ -1,0 +1,123 @@
+ VB:viaBatch/
+             @xmlns/                                                                4     1  25%
+             @xmlns:VB/                                                             4     1  25%
+             @xmlns:xs/                                                             4     1  25%
+             @xmlns:xsi/                                                            4     1  25%
+             @xsi:SchemaLocation/                                                   4     1  25%
+             @xsi:schemaLocation/                                                   4     1  25%
+             VB:header/
+                       VB:batchDate/                                                4     1  25%
+                       VB:batchType/                                                4     1  25%
+                       VB:contributor/                                              4     1  25%
+                       VB:emailAddress/                                             4     1  25%
+                       VB:recordType/                                               4     1  25%
+             viaRecord/
+                       @images/                                                 33345     2   0%
+                       @originalAtHarvard/                                      33345     2   0%
+                       @xmlns:xlink/                                            33345     1   0%
+                       recordId/                                                33345 33345 100%
+                       work/
+                            associatedName/
+                                           dates/                               12001  2940  24%
+                                           nameElement/                         12001  5288  44%
+                                           nationality/                          2275    43   1%
+                                           place/                                3574   167   4%
+                                           role/                                11581    73   0%
+                            classification/
+                                           number/                              15469 14806  95%
+                                           type/                                15469     6   0%
+                            copyright/                                           5016    18   0%
+                            creator/
+                                    dates/                                      30106  1778   5%
+                                    nameElement/                                30103  3958  13%
+                                    nationality/                                12022    61   0%
+                                    place/                                      16642   234   1%
+                                    role/                                       29885    68   0%
+                            culture/
+                                    term/                                       15681   112   0%
+                            description/                                         9897  5131  51%
+                            dimensions/                                         28202 12912  45%
+                            freeDate/                                           33345  4981  14%
+                            image/
+                                  @restrictedImage/                             19685     2   0%
+                                  @xlink:href/                                  19685 19685 100%
+                                  caption/                                       5580  2165  38%
+                                  thumbnail/
+                                            @xlink:href/                        19685 19685 100%
+                            itemIdentifier/
+                                           number/                               7868  7374  93%
+                                           type/                                 7423    65   0%
+                            location/
+                                     geodata/
+                                             country/                           11898    24   0%
+                                             siteCity/                          10410   553   5%
+                                             stateProvince/                      8554    63   0%
+                                     place/                                     11901  1433  12%
+                                     type/                                        514     4   0%
+                            materials/                                          32381  2573   7%
+                            notes/                                              23137  8643  37%
+                            placeName/
+                                      place/                                      755   292  38%
+                            production/
+                                       placeOfProduction/
+                                                         geodata/
+                                                                 country/        2930    38   1%
+                                                                 siteCity/       2843   798  28%
+                                                                 stateProvince/  2259   169   7%
+                                                         place/                  2991   971  32%
+                                       producer/                                  598   206  34%
+                                       role/                                      563     1   0%
+                            relatedInformation/                                  2775   209   7%
+                                               @link/                             985     3   0%
+                                               @xlink:href/                        95     1   1%
+                            relatedWork/
+                                        relationship/                            4485    57   1%
+                                        textElement/                             4509   158   3%
+                            repository/
+                                       number/                                  27693 20641  74%
+                                       repositoryName/                          27561  1878   6%
+                            state/                                                137    56  40%
+                            structuredDate/
+                                           beginDate/                           26969   863   3%
+                                           endDate/                             26969   834   3%
+                            style/
+                                  term/                                          1011   119  11%
+                            surrogate/
+                                      @componentID/                             42127 42127 100%
+                                      associatedName/
+                                                     dates/                      5129   354   6%
+                                                     nameElement/                5129   661  12%
+                                                     nationality/                1176    31   2%
+                                                     place/                       991    67   6%
+                                                     role/                       5090    21   0%
+                                      classification/
+                                                     number/                    42046 22757  54%
+                                      copyright/                                 1265    77   6%
+                                      creator/
+                                              dates/                              616   155  25%
+                                              nameElement/                        622   215  34%
+                                              nationality/                        376    16   4%
+                                              role/                               619    17   2%
+                                      image/
+                                            @restrictedImage/                   25182     2   0%
+                                            @xlink:href/                        25182 25182 100%
+                                            thumbnail/
+                                                      @xlink:href/              25182 25182 100%
+                                      notes/                                      256   215  83%
+                                      repository/
+                                                 number/                        42127 42122  99%
+                                                 repositoryName/                42127     4   0%
+                                      title/
+                                            textElement/                        38997 18780  48%
+                                      topic/
+                                            source/                             11766     8   0%
+                                            term/                               32349  1873   5%
+                                      workType/                                 40610    10   0%
+                            title/
+                                  textElement/                                  43104 34134  79%
+                                  type/                                          9249    25   0%
+                            topic/
+                                  source/                                       51086    10   0%
+                                  term/                                         71867  2525   3%
+                            useRestrictions/                                    12165    24   0%
+                            workType/                                           41756   352   0%

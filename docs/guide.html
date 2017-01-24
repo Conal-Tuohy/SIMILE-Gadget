@@ -1,0 +1,167 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>SIMILE | Gadget | Gadget User Guide</title>
+  <link rel="stylesheet" href="http://simile.mit.edu/styles/default.css"
+ type="text/css">
+  <style>
+     #body {
+        margin-bottom: 220px;
+     }
+    </style>
+</head>
+<body>
+<!--#include virtual="sidebar.html" -->
+<ul id="path">
+  <li><a href="http://simile.mit.edu/" title="Home">SIMILE</a></li>
+  <li><a href="http://simile.mit.edu/gadget/" title="Home">Gadget</a></li>
+  <li><span>Gadget User Guide</span></li>
+</ul>
+<div id="body">
+<h1>Gadget User Guide</h1>
+<p>XML is both a syntax and a model. The syntax is based on angle
+brakets, while the model is basically a tree of nodes, which could be
+either elements, attributes of text containers.&nbsp; The DOM
+specification describes it in detail.</p>
+<p>The 'names' of those nodes are not dictated by the XML model or
+syntax and, in general, there is no reason why nodes with the same name
+or content should be reused throughout a same XML tree, but real life
+shows how the complexity of the schemas that regulate the name of those
+nodes and their abilities to nest is not a function of the size of the
+dataset.</p>
+<p>This is the basic property upon which XML inspection starts to make
+sense: when the complexity of the structural patterns exhibited by the
+XML dataset is not a function of the size of the dataset. One example
+for all: the web contains billions of documents, and it is possible to
+convert all of them into XHTML and create a huge XML dataset several
+TeraBytes big. But the structural complexity of that XML dataset would
+not be a function of its size, but a function of the schemas used,
+mainly XHTML.</p>
+<p>An example of a dataset that doesn't exhibit this property would be
+a dataset assembled taking a single document as an example of an
+instance from collection of schemas, but even in that case, real life
+usage of XML shows that the number of schemas grows a lot slower (I
+would expect, logarithmically) than the amount of XML data generated.</p>
+<p>Another interesting property that real life XML datasets exhibit is
+the fact that 'semantic' information (information that shows the user
+how to understand this) is not encoded in thenode name but in the
+entire sequence of names that leads to that node. In brevity, in its
+XPath. An example of this is the use of the node "email" that has no
+meaning by itself, if not indicating that it contains an email address,
+but the path fragment "person/email" will indicate that the "email"
+node is contained inside the "person" node and for that reason, is
+associated to that.</p>
+<p>Real life analysis shows that the number of XPaths is a function of
+the complexity of the schema, therefore, again, not a function of the
+complexity of the dataset.</p>
+<h2><a name="inspection"></a>XML Inspection</h2>
+<p>The process of XML inspection is based on the following assumptions:</p>
+<ul>
+  <li>the data is encoded in literals, either as textual nodes inside
+elements or as attribute values</li>
+  <li>the metadata is encoded in the XPaths that identify those literals</li>
+  <li>mixed content is considered as data</li>
+</ul>
+<p>Given those assumptions, which stem from the fact that big datasets
+are normally encoding databases and therefore mixed content is rare or
+used as part of descriptions, we would like to "inspect" the dataset to
+have an overview of how it looks like and normally this means answering
+the following questions:</p>
+<ul>
+  <li>what xpaths were used in this dataset?</li>
+  <li>how many times were they used?</li>
+</ul>
+<p>Another property that real life XML datasets exhibit is not only the
+high reusability of nodes and, in general, xpaths, but also the level
+of reusability of the literals contained in those paths. As an example,
+a path like "object/@id" will probably have a different literal
+associated to it for each use, while a path like "song/genre" will
+probably exhibit a higher reusability of the literals.</p>
+<p>We introduced the "unicity" index for XPaths, that is calculated as:</p>
+<pre>unicity = 100 * uniques / frequency</pre>
+<p>where</p>
+<ul>
+  <li>frequency := the number of times that this xpath was found in the
+inspected dataset</li>
+  <li>uniques := the number of unique literals that this xpath contained</li>
+</ul>
+<p>In general, unicity indicates the "likeliness" of the xpath to
+contain information that is unique for a specific item (id-like) or a
+categorization of a specific item (facet-like).</p>
+<h2><a name="how_it_works"></a>How Gadget Works</h2>
+<p>The key in dealing with large quantities of data is to process them
+as stream and store the results, rather than attemp to store all data
+in memory and process it from there. Obviously, this is good in theory,
+but in practice one must retain state about what happened before in
+order, for example, to be able to identify if a literal was found
+previously in the document, without having to scan the document
+everytime.</p>
+<p>The first choice in the architecture of Gadget was to build it as a
+SAX even handler, instead of attempting to process a DOM.</p>
+<p>The second choice was the transformation of all literals into
+fixed-length hashcodes, this allows us to save the state of the
+existance of a literal without the penalty of having to store the
+entire information about it (of which we make no use during
+inspection!).</p>
+<p>The third choice was to keep the gathered information in memory,
+instead of attempting to persist this on disk. The reason for this was
+speed and ease of development. Real life usage of the tool shows that
+memory consumption of the state information during the introspection
+grows less then linear with the size of the corpus. The biggest
+analyzed corpus was 260mb and fit comfortably in 100mb of usage. We
+understand that this choice might be reconsidered if the size of the
+corpora grow a few orders of magnitude.</p>
+<p>Gadget is implemented in 100% pure Java and have very minimal
+dependencies on external libraries (basically just the XML parser,
+which is now part of the java runtime environment).</p>
+<p>Real life usage shows the ability to inspect 40Mb of XML per minute
+on an avarage machine (if enough memory is given to the VM and garbage
+collection doesn't kill its performance!)</p>
+<h2><a name="modes"></a>Gadget's Modes of Operation</h2>
+<p>Gadget can be used in different ways:</p>
+<ol>
+  <li>introspect the dataset and print theresults ordered by XPath,
+Frequency or Unicity</li>
+  <li>introspect the dataset and print the results as a
+comma-separated-values list</li>
+  <li>read a previously saved comma-separated-values list and order by
+XPath, Frequency or Unicity</li>
+  <li>just "unroll" the dataset into xpaths</li>
+</ol>
+<p>Mode #1 is the direct mode of operation.&nbsp; Mode #2 and #3 were
+implemented because while the inspection process is rather slow (could
+take up to several tens of minutes), the ordering and presentation of
+those results is rather fact and real life usage shows the need to have
+different projections of that data.</p>
+<p>Mode #4 does not perform any inspection, but just unrolls the
+xpaths. This is useful as the first stage of a pipeline that later
+wants to use UNIX tools like <i>grep</i>, <i>sort</i>, <i>uniq</i>
+and <i>wc</i> for other kinds of inspection.</p>
+<h2><a name="examples"></a>Examples of Use</h2>
+<p>Suppose you have a folder "/datasets/foo/" that contains a
+collection of XML documents, in various subfolders, that you want to
+inspect it and sort the results by unicity. All you have to do is to
+point Gadget at it and it will automatically scan for all documents
+with the ".xml" extension and inspect them. By using the "-r" option
+you trigger recursive behavior that will crawl all subdirectories from
+that point on. So, what you need is:</p>
+<pre>./gadget.sh -r -U /datasets/foo/</pre>
+<p>You have found out that you might also want to view this ordered by
+XPath, but that processing the dataset takes a few minutes and you
+don't want to redo this everytime. The solution is to have Gadget print
+the results as comma-separated-values and save them for later use. So:</p>
+<pre>./gadget.sh -r -C /datasets/foo &gt; foo.gadget.csv</pre>
+<p>at this point, you can run gadget again to present those results in
+a friendlier way and way faster!</p>
+<pre>./gadget.sh -x foo.gadget.csv -P</pre>
+<p>will tell gadget not to look for files to inspect but get the
+results from the CSV file specified with the "-x" option. Note how you
+can also use that CSV file and import it in your spreadsheet program
+for creating graphs or performing more complex analysis.</p>
+<p>Anyway, for a more detailed view of the options, type</p>
+<pre>./gadget.sh --help</pre>
+</div>
+<!--#include virtual="../footer.html" -->
+</body>
+</html>

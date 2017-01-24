@@ -1,0 +1,199 @@
+ CRMset/
+        CRM_Entity/
+                   changed_ownership_by/
+                                        at_most_within/
+                                                       begins_at/
+                                                                 in_class/                                                                    2   2 100%
+                                                       ends_at/
+                                                               in_class/                                                                      2   2 100%
+                                                       in_class/                                                                            200   5   2%
+                                        carried_out_by/
+                                                       has_note/                                                                              2   2 100%
+                                                       in_class/                                                                              4   3  75%
+                                                       in_the_role_of/
+                                                                      in_class/                                                               4   3  75%
+                                                       is_identified_by/
+                                                                        in_class/                                                             8   5  62%
+                                        has_type/
+                                                 in_class/                                                                                  202   4   1%
+                                        in_class/                                                                                           202  88  43%
+                                        transferred_title_to/
+                                                             in_class/                                                                      200   3   1%
+                                                             took_place_at/
+                                                                           falls_within/
+                                                                                        in_class/                                           200   2   1%
+                                                                           in_class/                                                        200   3   1%
+                   has_dimension/
+                                 has_type/
+                                          in_class/                                                                                         425   6   1%
+                                 in_class/                                                                                                  426 212  49%
+                                 unit/                                                                                                      210   2   0%
+                                 value/                                                                                                     213 139  65%
+                   has_note/                                                                                                                 82  72  87%
+                            has_type/                                                                                                       827 679  82%
+                                     in_class/                                                                                             1654  14   0%
+                   has_type/
+                            has_type/
+                                     in_class/                                                                                              200   2   1%
+                            in_class/                                                                                                       606 136  22%
+                            is_identified_by/
+                                             in_class/                                                                                      400 168  42%
+                                             is_identified_by/
+                                                              in_class/                                                                     200  78  39%
+                                             is_referred_to_by/
+                                                               has_note/                                                                    100  69  69%
+                                                               in_class/                                                                    200   4   2%
+                   in_class/                                                                                                                406 191  47%
+                   is_composed_of/
+                                  CRM_Entity/
+                                             changed_ownership_by/
+                                                                  at_most_within/
+                                                                                 begins_at/
+                                                                                           in_class/                                          2   2 100%
+                                                                                 ends_at/
+                                                                                         in_class/                                            2   2 100%
+                                                                  carried_out_by/
+                                                                                 has_note/                                                    2   2 100%
+                                                                                 in_class/                                                    4   3  75%
+                                                                                 in_the_role_of/
+                                                                                                in_class/                                     4   3  75%
+                                                                                 is_identified_by/
+                                                                                                  in_class/                                   8   5  62%
+                                                                  has_type/
+                                                                           in_class/                                                          2   2 100%
+                                                                  in_class/                                                                   2   2 100%
+                                             consists_of/
+                                                         in_class/                                                                            2   2 100%
+                                             has_note/                                                                                        1   1 100%
+                                             has_type/
+                                                      in_class/                                                                               2   2 100%
+                                             in_class/                                                                                        2   2 100%
+                                             is_composed_of/
+                                                            CRM_Entity/                                                                       1   1 100%
+                                                                       changed_ownership_by/                                                 45  45 100%
+                                                                                            at_most_within/
+                                                                                                           begins_at/
+                                                                                                                     in_class/               50   2   4%
+                                                                                                           ends_at/
+                                                                                                                   in_class/                 50   2   4%
+                                                                                            carried_out_by/
+                                                                                                           has_note/                         50   2   4%
+                                                                                                           in_class/                        100   3   3%
+                                                                                                           in_the_role_of/
+                                                                                                                          in_class/         100   3   3%
+                                                                                                           is_identified_by/
+                                                                                                                            in_class/       200   5   2%
+                                                                                            has_type/
+                                                                                                     in_class/                               50   2   4%
+                                                                                            in_class/                                        50  26  52%
+                                                                       consists_of/
+                                                                                   in_class/                                                140   2   1%
+                                                                       in_class/                                                            140  71  50%
+                                                                       is_documented_in/
+                                                                                        has_note/                                            46  46 100%
+                                                                                        has_type/
+                                                                                                 in_class/                                   92   2   2%
+                                                                                        in_class/                                           138  48  34%
+                                                                                        was_produced_by/
+                                                                                                        at_most_within/
+                                                                                                                       begins_at/
+                                                                                                                                 in_class/   92   4   4%
+                                                                                                                       ends_at/
+                                                                                                                               in_class/     86   2   2%
+                                                                                                        has_note/                            46   1   2%
+                                                                                                        has_type/
+                                                                                                                 in_class/                   92   2   2%
+                                                                                                        in_class/                            92   4   4%
+                                                                       is_identified_by/
+                                                                                        in_class/                                           280 142  50%
+                                                                       was_classified_by/
+                                                                                         assigned/
+                                                                                                  in_class/                                 280   3   1%
+                                                                                         at_most_within/
+                                                                                                        begins_at/
+                                                                                                                  in_class/                 140   2   1%
+                                                                                                        ends_at/
+                                                                                                                in_class/                   140   2   1%
+                                                                                         has_type/
+                                                                                                  in_class/                                 140   2   1%
+                                                                                         in_class/                                          210  72  34%
+                                                                                         took_place_at/
+                                                                                                       in_class/                            560   5   0%
+                                                                                                       is_identified_by/
+                                                                                                                        in_class/           280   3   1%
+                                                                       was_measured/
+                                                                                    at_most_within/
+                                                                                                   begins_at/
+                                                                                                             in_class/                       90   2   2%
+                                                                                                   ends_at/
+                                                                                                           in_class/                         90   2   2%
+                                                                                    carried_out_by/
+                                                                                                   has_note/                                 90   2   2%
+                                                                                                   in_class/                                180   3   1%
+                                                                                                   in_the_role_of/
+                                                                                                                  in_class/                 180   3   1%
+                                                                                                   is_identified_by/
+                                                                                                                    in_class/               360   5   1%
+                                                                                    has_type/
+                                                                                             in_class/                                       90   2   2%
+                                                                                    in_class/                                               125  47  37%
+                                                                                    observed_dimension/
+                                                                                                       has_type/
+                                                                                                                in_class/                   182   3   1%
+                                                                                                       in_class/                            182  91  50%
+                                                                                                       unit/                                 91   1   1%
+                                                                                                       value/                                91  55  60%
+                                             is_identified_by/
+                                                              in_class/                                                                       2   2 100%
+                                             was_classified_by/
+                                                               assigned/
+                                                                        in_class/                                                             4   3  75%
+                                                               at_most_within/
+                                                                              begins_at/
+                                                                                        in_class/                                             2   2 100%
+                                                                              ends_at/
+                                                                                      in_class/                                               2   2 100%
+                                                               has_type/
+                                                                        in_class/                                                             2   2 100%
+                                                               in_class/                                                                      3   3 100%
+                                                               took_place_at/
+                                                                             in_class/                                                        8   5  62%
+                                                                             is_identified_by/
+                                                                                              in_class/                                       4   3  75%
+                   is_documented_in/
+                                    in_class/                                                                                               402 189  47%
+                                    was_created_by/                                                                                           1   1 100%
+                   is_identified_by/
+                                    has_type/
+                                             in_class/                                                                                      200   2   1%
+                                    in_class/                                                                                               406 191  47%
+                   is_referred_to_by/
+                                     has_note/                                                                                               95  77  81%
+                                     in_class/                                                                                              190   2   1%
+                   preferred_identifier_is/
+                                           has_type/
+                                                    in_class/                                                                               200   2   1%
+                                           in_class/                                                                                        200  87  43%
+                   was_classified_by/
+                                     assigned/
+                                              has_type/                                                                                       4   2  50%
+                                                       in_class/                                                                            272   3   1%
+                                              in_class/                                                                                     268 102  38%
+                                     at_most_within/
+                                                    in_class/                                                                               140  18  12%
+                                     carried_out_by/
+                                                    in_class/                                                                               140  19  13%
+                                     in_class/                                                                                              140  62  44%
+                   was_present_at/
+                                  at_most_within/
+                                                 begins_at/
+                                                           in_class/                                                                          2   2 100%
+                                                 ends_at/
+                                                         in_class/                                                                            2   2 100%
+                                  has_type/
+                                           in_class/                                                                                          2   2 100%
+                                  in_class/                                                                                                   2   2 100%
+                                  took_place_at/
+                                                in_class/                                                                                     8   5  62%
+                                                is_identified_by/
+                                                                 in_class/                                                                    4   3  75%
