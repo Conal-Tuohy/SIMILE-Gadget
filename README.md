@@ -47,7 +47,7 @@ NOTE: on Windows, use `gadget` instead of `./gadget`.
 ## Are there any more in-depth docs?
 
 Point your browser to the ./docs/index.html file for this version's
-documentation.
+documentation, or see the [final version of the project's Wiki on the Internet Archive](http://web.archive.org/web/20140421160238/http://simile.mit.edu/wiki/Gadget).
 
 ## Licensing and legal issues
 
