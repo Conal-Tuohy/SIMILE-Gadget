@@ -54,7 +54,7 @@
    1> mvn package
    2> ./gadget index -o data/blah -r /path/to/your/pile/of/xml/
    3> ./gadget chart data/blah
-   4> mvn jetty6:run
+   4> mvn jetty:run
 
   Point your browser to http://127.0.0.1:8080/ to browse gadget.
 

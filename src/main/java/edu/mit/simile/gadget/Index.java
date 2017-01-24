@@ -3,6 +3,7 @@ package edu.mit.simile.gadget;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
@@ -15,7 +16,10 @@ import javax.xml.parsers.SAXParserFactory;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.ParseException;
+import org.apache.xml.resolver.tools.CatalogResolver;
+import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
 
 import com.sleepycat.je.DatabaseException;
 
@@ -35,7 +39,7 @@ public class Index extends Gadget {
     
     protected boolean recursive = false;
     protected boolean trim = true;
-    protected String pattern = ".*\\.(xml)";
+    protected String pattern = ".*\\.xml$";
     protected File data = new File("./data");
     protected Properties props = new Properties();
     
@@ -111,44 +115,48 @@ public class Index extends Gadget {
         log("Generating indices:");
         SAXParserFactory factory = SAXParserFactory.newInstance();
         factory.setNamespaceAware(true);
-        factory.setValidating(false);
+        factory.setValidating(true);
         
         SAXParser parser = factory.newSAXParser();
         InspectingHandler handler = new InspectingHandler(data, props, trim);
         FileFilter filter = new RegexpFileFilter(pattern);
         
+        XMLReader reader = parser.getXMLReader();
+        reader.setEntityResolver(new CatalogResolver());
+        
         Iterator iterator = args.iterator();
         while (iterator.hasNext()) {
             File file = new File((String) iterator.next());
-            process(file, filter, recursive, parser, handler);
+            process(file, filter, recursive, reader, handler);
         }
 
         long globalEnd = System.currentTimeMillis();
         log("\nProcessing took " + ScreenUtils.format(globalEnd - globalStart));
     }
     
-    void process(File file, FileFilter filter, boolean recursive, SAXParser parser, Handler handler)
+    void process(File file, FileFilter filter, boolean recursive, XMLReader reader, Handler handler)
     throws IOException, SAXException {
         File[] currentFiles = file.listFiles();
         if (currentFiles != null) {
             for (int j = 0; j < currentFiles.length; j++) {
                 File currentFile = currentFiles[j];
                 if (currentFile.isDirectory() && recursive) {
-                    process(currentFile, filter, recursive, parser, handler);
+                    process(currentFile, filter, recursive, reader, handler);
                 } else if (filter.accept(currentFile) && currentFile.length() > 0) {
-                    processFile(currentFile, parser, handler);
+                    processFile(currentFile, reader, handler);
                 }
             }
         } else {
-            processFile(file, parser, handler);
+            processFile(file, reader, handler);
         }
     }
     
-    void processFile(File file, SAXParser parser, Handler handler) 
+    void processFile(File file, XMLReader reader, Handler handler) 
     throws IOException, SAXException {
         log(" Parsing " + file + "...");
         long start = System.currentTimeMillis();
-        parser.parse(file,handler);
+        reader.setContentHandler(handler);
+        reader.parse(new InputSource(new FileReader(file)));
         long end = System.currentTimeMillis();
         log("   took " + ScreenUtils.format(end - start));
     }

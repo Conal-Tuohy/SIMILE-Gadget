@@ -54,6 +54,8 @@ import edu.mit.simile.gadget.utils.ScreenUtils;
  */
 public class Servlet extends HttpServlet {
     
+    private static final long serialVersionUID = -5124933319973250897L;
+
     private static final String VELOCITY = "velocity";
     private static final String DATA = "data";
     

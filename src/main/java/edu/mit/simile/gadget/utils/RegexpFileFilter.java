@@ -15,7 +15,7 @@ public class RegexpFileFilter implements FileFilter {
     }
     
     public boolean accept(File file) {
-        return file.getName().matches(this.regexp);
+        return file.getAbsolutePath().matches(this.regexp);
     }
     
 }

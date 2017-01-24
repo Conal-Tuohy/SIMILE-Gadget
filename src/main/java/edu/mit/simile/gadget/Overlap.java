@@ -18,6 +18,9 @@ import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.ParseException;
 import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
+
+import org.apache.xml.resolver.tools.CatalogResolver;
 
 import edu.mit.simile.gadget.data.CollidingString;
 import edu.mit.simile.gadget.handlers.FilteringHandler;
@@ -109,6 +112,9 @@ public class Overlap extends Index {
         SAXParser parser = factory.newSAXParser();
         FileFilter filter = new RegexpFileFilter(pattern);
         
+        XMLReader reader = parser.getXMLReader();
+        reader.setEntityResolver(new CatalogResolver());
+        
         int counter = 0;
         Iterator i = args.iterator();
         while (i.hasNext()) {
@@ -116,7 +122,7 @@ public class Overlap extends Index {
             folder = new File((String) i.next());
             String xpath = (String) i.next();
             FilteringHandler handler = new FilteringHandler(xpath, trim);
-            process(folder, filter, recursive, parser, handler);
+            process(folder, filter, recursive, reader, handler);
         }
         
         cutoff = (cutoff == 0) ? counter : cutoff;
