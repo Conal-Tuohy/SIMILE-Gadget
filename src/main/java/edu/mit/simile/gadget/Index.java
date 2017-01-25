@@ -5,6 +5,7 @@ import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Properties;
@@ -80,6 +81,10 @@ public class Index extends Gadget {
                 p.load(fis);
                 fis.close();
                 props = p;
+            } else {
+            	props.setProperty("name", Arrays.toString(line.getArgs()));
+            	props.setProperty("description", Arrays.toString(line.getArgs()));
+            	props.setProperty("url", "#");
             }
             
             if (line.getArgs().length == 0) {
